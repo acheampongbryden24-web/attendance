@@ -8,76 +8,103 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
     <style>
-        body { margin:0; font-family: 'Segoe UI', Arial, sans-serif; transition: 0.3s; overflow-x: hidden; }
+        /* CSS Variables for easy theme switching */
+        :root {
+            --bg: #0f172a;
+            --text: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --header-bg: #2563eb;
+            --table-row: rgba(128, 128, 128, 0.1);
+        }
+
+        /* Light Theme Overrides */
+        .light-theme {
+            --bg: #f1f5f9;
+            --text: #1e293b;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --header-bg: #1e3a8a;
+            --table-row: #e2e8f0;
+        }
+
+        body { 
+            margin: 0; 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            transition: 0.3s; 
+            overflow-x: hidden; 
+        }
         
         /* LOGIN UI */
         .login-container {
-            height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background: linear-gradient(135deg,#1e3a8a,#2563eb,#0f172a);
-            background-size:300% 300%;
-            animation:bgMove 8s infinite alternate;
+            background-size: 300% 300%;
+            animation: bgMove 8s infinite alternate;
         }
         @keyframes bgMove { 0%{background-position:left;} 100%{background-position:right;} }
 
         .login-card {
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(15px);
-            padding:40px;
-            border-radius:20px;
-            width:320px;
-            text-align:center;
-            color:white;
-            box-shadow:0 20px 40px rgba(0,0,0,0.4);
+            padding: 40px;
+            border-radius: 20px;
+            width: 320px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             border: 1px solid rgba(255,255,255,0.2);
         }
 
         .input-group input {
-            width:100%;
-            padding:12px;
-            margin:10px 0;
-            border:none;
-            border-radius:10px;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 10px;
             box-sizing: border-box;
             outline: none;
         }
 
         .login-btn {
-            width:100%;
-            padding:12px;
-            background:#22c55e;
-            border:none;
-            border-radius:10px;
-            color:white;
-            cursor:pointer;
+            width: 100%;
+            padding: 12px;
+            background: #22c55e;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
             font-weight: bold;
-            transition:0.3s;
+            transition: 0.3s;
             margin-top: 10px;
         }
 
         /* DASHBOARD UI */
-        .dark { background:#0f172a; color:white; }
-        header { padding:20px; text-align:center; background:#2563eb; color:white; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .container { padding:30px; max-width: 1200px; margin: auto; min-height: 80vh; }
+        header { padding: 20px; text-align: center; background: var(--header-bg); color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .container { padding: 30px; max-width: 1200px; margin: auto; min-height: 80vh; }
         
         .controls { margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
         
-        button { padding:12px 20px; border:none; border-radius:8px; cursor:pointer; font-weight: 600; transition: 0.2s; }
-        .btn-green { background:#22c55e; color:white; }
-        .btn-blue { background:#3b82f6; color:white; }
-        .btn-red { background:#ef4444; color:white; }
-        .btn-amber { background:#f59e0b; color:white; }
-        .btn-outline { background: transparent; border: 1px solid #64748b; color: inherit; }
+        button { padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .btn-green { background: #22c55e; color: white; }
+        .btn-blue { background: #3b82f6; color: white; }
+        .btn-red { background: #ef4444; color: white; }
+        .btn-amber { background: #f59e0b; color: white; }
+        .btn-outline { background: transparent; border: 1px solid #64748b; color: var(--text); }
+        .btn-theme { background: #64748b; color: white; }
 
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
-        .card { padding:25px; background:rgba(255,255,255,0.08); border-radius:15px; border: 1px solid rgba(255,255,255,0.1); }
+        .card { padding: 25px; background: var(--card-bg); border-radius: 15px; border: 1px solid var(--card-border); }
         .stats-val { font-size: 2.2em; font-weight: bold; display: block; margin-top: 5px; }
 
-        .table-container { overflow-x: auto; background: rgba(255,255,255,0.03); border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); }
-        table { width:100%; border-collapse:collapse; }
-        th, td { padding:18px; text-align: left; border-bottom:1px solid rgba(128,128,128,0.1); }
+        .table-container { overflow-x: auto; background: var(--card-bg); border-radius: 15px; border: 1px solid var(--card-border); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 18px; text-align: left; border-bottom: 1px solid var(--table-row); }
         
         .status-dot { height: 12px; width: 12px; background-color: #ef4444; border-radius: 50%; display: inline-block; }
         .status-dot.online { background-color: #22c55e; box-shadow: 0 0 10px #22c55e; }
@@ -89,22 +116,21 @@
             padding: 8px 15px; 
             border-radius: 20px; 
             font-size: 0.9em; 
-            color: #fbbf24;
+            color: #f59e0b;
         }
 
         .main-footer {
             text-align: center;
             padding: 20px 0;
             margin-top: 50px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--card-border);
             color: #94a3b8;
             font-size: 14px;
-            letter-spacing: 1px;
         }
     </style>
 </head>
 
-<body class="dark">
+<body>
 <div id="loginPage" class="login-container">
     <div class="login-card">
         <h1>EduTrack</h1>
@@ -138,6 +164,7 @@
         <div class="controls">
             <button class="btn-green" onclick="connectSerial()">🔌 Connect Arduino</button>
             <button class="btn-amber" onclick="toggleAbsentees()">🔍 View Absentees</button>
+            <button class="btn-theme" onclick="toggleTheme()">🌓 Theme</button>
             <button class="btn-outline" onclick="newDay()" style="border-color:#22c55e; color:#22c55e;">🆕 New Day</button>
             <button class="btn-red" onclick="closeDay()">🔒 Close Day</button>
             <button class="btn-blue" onclick="exportCSV()">📥 Export Report</button>
@@ -160,7 +187,7 @@
         <div class="stats-grid">
             <div class="card" style="grid-column: span 2; text-align: center; border-color: #3b82f6;">
                 <span style="color:#3b82f6; font-weight: bold; letter-spacing: 1px;">TODAY'S DATE</span>
-                <span id="displayDate" class="stats-val" style="font-size: 1.8em; color: #fff;">---</span>
+                <span id="displayDate" class="stats-val" style="font-size: 1.8em;">---</span>
             </div>
 
             <div class="card">
@@ -217,6 +244,14 @@
     let port, reader;
     let showingAbsentees = false;
     const decoder = new TextDecoder();
+
+    // Theme logic: load saved theme
+    if(localStorage.getItem('theme') === 'light') document.body.classList.add('light-theme');
+
+    function toggleTheme() {
+        document.body.classList.toggle('light-theme');
+        localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
+    }
 
     if (!localStorage.getItem("adminPassword")) {
         localStorage.setItem("adminPassword", "1234");
@@ -380,12 +415,9 @@
     async function closeDay() {
         if(confirm("Finalize today's session? This will save absentees to Firebase, download the report, and log you out.")) {
             const today = new Date().toISOString().split('T')[0];
-            
-            // 1. Calculate absentees
             const presentIds = records.filter(r => r.status === "PRESENT").map(r => r.id);
             const absentees = Object.keys(students).filter(id => !presentIds.includes(id));
 
-            // 2. Save each absentee to its own node in Firebase
             const absentRef = db.ref('absentees/' + today);
             const uploadPromises = absentees.map(id => {
                 return absentRef.push({
@@ -408,17 +440,12 @@
 
     function exportCSV() {
         let csv = "Name,ID,Status,Time\n";
-        
-        // Add Present and Invalid records
         records.forEach(r => { csv += `"${r.name}","${r.id}","${r.status}","${r.time}"\n`; });
-
-        // Add calculated absentees to the bottom of the CSV
         const presentIds = records.filter(r => r.status === "PRESENT").map(r => r.id);
         const absentees = Object.keys(students).filter(id => !presentIds.includes(id));
         absentees.forEach(id => {
             csv += `"${students[id]}","${id}","ABSENT","--:--"\n`;
         });
-
         const blob = new Blob([csv], { type: 'text/csv' });
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
