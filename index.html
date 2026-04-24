@@ -418,19 +418,40 @@
         }
     }
 
-    function saveToFirebase(id) {
+    async function saveToFirebase(id) {
         const today = new Date().toISOString().split('T')[0];
-        const alreadyPresent = records.some(r => r.id === id && r.status === "PRESENT");
         
-        if (alreadyPresent && students[id]) return;
+        // 1. Safety Check: If students object doesn't have this ID, it's invalid
+        if (!students[id]) {
+            console.log("Invalid ID scanned");
+            db.ref('attendance/' + today).push({
+                name: "Unknown",
+                id: id,
+                status: "INVALID",
+                time: new Date().toLocaleTimeString(),
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            });
+            return;
+        }
+
+        // 2. Perform a direct database "Once" check to be 100% sure
+        const snapshot = await db.ref('attendance/' + today).orderByChild('id').equalTo(id).once('value');
         
+        if (snapshot.exists()) {
+            console.log("Duplicate prevented for ID: " + id);
+            return; // Exit immediately, do not save
+        }
+
+        // 3. If we passed the check, save to Firebase
         db.ref('attendance/' + today).push({
-            name: students[id] || "Unknown",
+            name: students[id],
             id: id,
-            status: students[id] ? "PRESENT" : "INVALID",
+            status: "PRESENT",
             time: new Date().toLocaleTimeString(),
             timestamp: firebase.database.ServerValue.TIMESTAMP
         });
+        
+        console.log("Success: " + students[id] + " added.");
     }
 
     function listenToFirebase() {
