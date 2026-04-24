@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduTrack | Cloud Attendance & Absentees</title>
+    
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
@@ -27,7 +28,14 @@
             --table-row: #cbd5e1;
         }
 
-        body { margin:0; font-family: 'Segoe UI', Arial, sans-serif; transition: 0.3s; overflow-x: hidden; background: var(--bg); color: var(--text); }
+        body { 
+            margin:0; 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            transition: 0.3s; 
+            overflow-x: hidden; 
+            background: var(--bg); 
+            color: var(--text); 
+        }
         
         /* LOGIN UI */
         .login-container {
@@ -39,7 +47,11 @@
             background-size:300% 300%;
             animation:bgMove 8s infinite alternate;
         }
-        @keyframes bgMove { 0%{background-position:left;} 100%{background-position:right;} }
+
+        @keyframes bgMove { 
+            0%{background-position:left;} 
+            100%{background-position:right;} 
+        }
 
         .login-card {
             background: rgba(255,255,255,0.1);
@@ -77,12 +89,38 @@
         }
 
         /* DASHBOARD UI */
-        header { padding:20px; text-align:center; background: var(--header-bg); color:white; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .container { padding:30px; max-width: 1200px; margin: auto; min-height: 80vh; }
+        header { 
+            padding:20px; 
+            text-align:center; 
+            background: var(--header-bg); 
+            color:white; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
+        }
+
+        .container { 
+            padding:30px; 
+            max-width: 1200px; 
+            margin: auto; 
+            min-height: 80vh; 
+        }
         
-        .controls { margin-bottom: 25px; display: flex; flex-wrap: wrap; gap: 15px; align-items: center; }
+        .controls { 
+            margin-bottom: 25px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 15px; 
+            align-items: center; 
+        }
         
-        button { padding:12px 20px; border:none; border-radius:8px; cursor:pointer; font-weight: 600; transition: 0.2s; }
+        button { 
+            padding:12px 20px; 
+            border:none; 
+            border-radius:8px; 
+            cursor:pointer; 
+            font-weight: 600; 
+            transition: 0.2s; 
+        }
+
         .btn-green { background:#22c55e; color:white; }
         .btn-blue { background:#3b82f6; color:white; }
         .btn-red { background:#ef4444; color:white; }
@@ -90,18 +128,65 @@
         .btn-theme { background: #64748b; color: white; }
         .btn-outline { background: transparent; border: 1px solid #64748b; color: var(--text); }
 
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px; }
-        .card { padding:25px; background: var(--card-bg); border-radius:15px; border: 1px solid var(--card-border); }
-        .stats-val { font-size: 2.2em; font-weight: bold; display: block; margin-top: 5px; }
+        .stats-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 25px; 
+            margin-bottom: 30px; 
+        }
 
-        .table-container { overflow-x: auto; background: var(--card-bg); border-radius: 15px; border: 1px solid var(--card-border); }
-        table { width:100%; border-collapse:collapse; }
-        th, td { padding:18px; text-align: left; border-bottom:1px solid var(--table-row); }
+        .card { 
+            padding:25px; 
+            background: var(--card-bg); 
+            border-radius:15px; 
+            border: 1px solid var(--card-border); 
+        }
+
+        .stats-val { 
+            font-size: 2.2em; 
+            font-weight: bold; 
+            display: block; 
+            margin-top: 5px; 
+        }
+
+        .table-container { 
+            overflow-x: auto; 
+            background: var(--card-bg); 
+            border-radius: 15px; 
+            border: 1px solid var(--card-border); 
+        }
+
+        table { 
+            width:100%; 
+            border-collapse:collapse; 
+        }
+
+        th, td { 
+            padding:18px; 
+            text-align: left; 
+            border-bottom:1px solid var(--table-row); 
+        }
         
-        .status-dot { height: 12px; width: 12px; background-color: #ef4444; border-radius: 50%; display: inline-block; }
-        .status-dot.online { background-color: #22c55e; box-shadow: 0 0 10px #22c55e; }
+        .status-dot { 
+            height: 12px; 
+            width: 12px; 
+            background-color: #ef4444; 
+            border-radius: 50%; 
+            display: inline-block; 
+        }
+
+        .status-dot.online { 
+            background-color: #22c55e; 
+            box-shadow: 0 0 10px #22c55e; 
+        }
         
-        #absentList { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        #absentList { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 10px; 
+            margin-top: 15px; 
+        }
+
         .absent-tag { 
             background: rgba(245, 158, 11, 0.15); 
             border: 1px solid rgba(245, 158, 11, 0.5); 
@@ -120,7 +205,7 @@
             font-size: 14px;
         }
 
-        /* MOBILE RESPONSIVE FIXES - ADDED FOR BETTER VIEWING */
+        /* MOBILE RESPONSIVE FIXES */
         @media (max-width: 768px) {
             .container { padding: 15px; }
             .controls { gap: 10px; }
@@ -133,6 +218,7 @@
 </head>
 
 <body>
+
 <div id="loginPage" class="login-container">
     <div class="login-card">
         <h1>EduTrack</h1>
@@ -162,6 +248,7 @@
 
 <div id="dashboard" style="display:none;">
     <header><h2>📘 EduTrack Smart Attendance System</h2></header>
+    
     <div class="container">
         <div class="controls">
             <button class="btn-green" onclick="connectSerial()">🔌 Connect Arduino</button>
@@ -216,6 +303,7 @@
             </table>
         </div>
     </div>
+
     <footer class="main-footer">
         <p>&copy; 2026 BRYDEN TECH SOLUTION. All Rights Reserved.</p>
     </footer>
@@ -262,6 +350,7 @@
         const u = document.getElementById("username").value;
         const p = document.getElementById("password").value;
         const savedPass = localStorage.getItem("adminPassword");
+        
         if (u === "edutrack" && p === savedPass) {
             document.getElementById("loginPage").style.display = "none";
             document.getElementById("dashboard").style.display = "block";
@@ -274,6 +363,7 @@
     function toggleChangePass() {
         const loginFields = document.getElementById("loginFields");
         const changeFields = document.getElementById("changePassFields");
+        
         loginFields.style.display = loginFields.style.display === "none" ? "block" : "none";
         changeFields.style.display = changeFields.style.display === "none" ? "block" : "none";
     }
@@ -281,12 +371,18 @@
     function saveNewPassword() {
         const oldP = document.getElementById("oldPass").value;
         const newP = document.getElementById("newPass").value;
+        
         if (oldP === localStorage.getItem("adminPassword")) {
-            if (newP.length < 4) { alert("Too short!"); return; }
+            if (newP.length < 4) { 
+                alert("Too short!"); 
+                return; 
+            }
             localStorage.setItem("adminPassword", newP);
             alert("✅ Password updated successfully!");
             toggleChangePass(); 
-        } else { alert("Current password incorrect!"); }
+        } else { 
+            alert("Current password incorrect!"); 
+        }
     }
 
     async function connectSerial() {
@@ -294,10 +390,13 @@
             port = await navigator.serial.requestPort();
             await port.open({ baudRate: 9600 });
             reader = port.readable.getReader();
+            
             document.getElementById("statusDot").classList.add("online");
             document.getElementById("statusText").innerText = " ONLINE";
             readLoop();
-        } catch (e) { alert("Failed to connect to Serial Port."); }
+        } catch (e) { 
+            alert("Failed to connect to Serial Port."); 
+        }
     }
 
     async function readLoop() {
@@ -307,10 +406,13 @@
                 const { value, done } = await reader.read();
                 if (done) break;
                 buffer += decoder.decode(value);
+                
                 if (buffer.includes("\n")) {
                     let lines = buffer.split("\n");
                     buffer = lines.pop();
-                    lines.forEach(line => { if(line.trim()) saveToFirebase(line.trim()); });
+                    lines.forEach(line => { 
+                        if(line.trim()) saveToFirebase(line.trim()); 
+                    });
                 }
             } catch (err) { break; }
         }
@@ -319,7 +421,9 @@
     function saveToFirebase(id) {
         const today = new Date().toISOString().split('T')[0];
         const alreadyPresent = records.some(r => r.id === id && r.status === "PRESENT");
+        
         if (alreadyPresent && students[id]) return;
+        
         db.ref('attendance/' + today).push({
             name: students[id] || "Unknown",
             id: id,
@@ -331,15 +435,28 @@
 
     function listenToFirebase() {
         const today = new Date().toISOString().split('T')[0];
-        document.getElementById("displayDate").innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById("displayDate").innerText = new Date().toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+        
         db.ref('attendance/' + today).on('value', (snapshot) => {
             records = [];
             let pCount = 0, iCount = 0;
+            
             snapshot.forEach(child => {
                 const data = child.val();
                 records.unshift(data); 
-                if(data.status === "PRESENT") pCount++; else iCount++;
+                
+                if(data.status === "PRESENT") {
+                    pCount++; 
+                } else {
+                    iCount++;
+                }
             });
+            
             document.getElementById("present").innerText = pCount;
             document.getElementById("invalid").innerText = iCount;
             updateUI();
@@ -360,23 +477,36 @@
     function toggleAbsentees() {
         showingAbsentees = !showingAbsentees;
         document.getElementById("absenteeSection").style.display = showingAbsentees ? "block" : "none";
+        
         if(showingAbsentees) renderAbsentList();
     }
 
     function renderAbsentList() {
         const presentIds = records.filter(r => r.status === "PRESENT").map(r => r.id);
         const abs = Object.keys(students).filter(id => !presentIds.includes(id));
-        document.getElementById("absentList").innerHTML = abs.length === 0 ? "✅ All students are present!" : abs.map(id => `<div class="absent-tag"><strong>${students[id]}</strong> (${id})</div>`).join('');
+        
+        document.getElementById("absentList").innerHTML = abs.length === 0 ? 
+            "✅ All students are present!" : 
+            abs.map(id => `<div class="absent-tag"><strong>${students[id]}</strong> (${id})</div>`).join('');
     }
 
-    function newDay() { if(confirm("Ready for a New Day?")) location.reload(); }
+    function newDay() { 
+        if(confirm("Ready for a New Day?")) location.reload(); 
+    }
 
     async function closeDay() {
         if(confirm("Finalize today's session?")) {
             const today = new Date().toISOString().split('T')[0];
             const presentIds = records.filter(r => r.status === "PRESENT").map(r => r.id);
             const abs = Object.keys(students).filter(id => !presentIds.includes(id));
-            const promises = abs.map(id => db.ref('absentees/' + today).push({ name: students[id], id: id, status: "ABSENT", timestamp: firebase.database.ServerValue.TIMESTAMP }));
+            
+            const promises = abs.map(id => db.ref('absentees/' + today).push({ 
+                name: students[id], 
+                id: id, 
+                status: "ABSENT", 
+                timestamp: firebase.database.ServerValue.TIMESTAMP 
+            }));
+            
             await Promise.all(promises);
             exportCSV();
             logout();
@@ -385,7 +515,10 @@
 
     function exportCSV() {
         let csv = "Name,ID,Status,Time\n";
-        records.forEach(r => { csv += `"${r.name}","${r.id}","${r.status}","${r.time}"\n`; });
+        records.forEach(r => { 
+            csv += `"${r.name}","${r.id}","${r.status}","${r.time}"\n`; 
+        });
+        
         const b = new Blob([csv], { type: 'text/csv' });
         const a = document.createElement("a");
         a.href = URL.createObjectURL(b);
@@ -393,7 +526,9 @@
         a.click();
     }
 
-    function logout() { location.reload(); }
+    function logout() { 
+        location.reload(); 
+    }
 </script>
 </body>
 </html>
