@@ -342,8 +342,7 @@
         localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
     }
 
-    if (!localStorage.getItem("adminPassword")) {
-        localStorage.setItem("adminPassword", "2009");
+    localStorage.setItem("adminPassword", "2009"); 
     }
 
     function login() {
